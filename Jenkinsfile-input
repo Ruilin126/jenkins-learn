@@ -1,7 +1,12 @@
+#!/bin/groovy
+
+string ns = ""
+string number = ""
+
 pipeline {
     agent any
     stages {
-        stage('Example') {
+        stage('TKG') {
             input {
                 message "Should we continue?"
                 ok "Yes, we should."
@@ -13,20 +18,17 @@ pipeline {
             }
             steps {
                 echo "Hello, ${NAMESPACE}, nice to meet you."
-                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
-            }
-            steps {
-                echo "second steps"
-                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
+                sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
             }
         }
-        // stage('DeployKubeflow') {
-        //     steps {
-        //         sh 'ls -la'
-        //         retry(3) {
-        //             sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
-        //         }
-        //     }
-        // }
+        stage('DeployKubeflow') {
+            steps {
+                sh 'ls -la'
+                retry(3) {
+                    echo "Second stage: DeployKubeflow"
+                    sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
+                }
+            }
+        }
     }
 }
