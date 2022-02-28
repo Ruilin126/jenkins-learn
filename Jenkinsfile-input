@@ -13,7 +13,15 @@ pipeline {
             }
             steps {
                 echo "Hello, ${NAMESPACE}, nice to meet you."
-                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -ns ${NAMESPACE} -number ${NUMBER}'
+                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
+            }
+        }
+        stage('DeployKubeflow') {
+            steps {
+                sh 'ls -la'
+                retry(3) {
+                    sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
+                }
             }
         }
     }
