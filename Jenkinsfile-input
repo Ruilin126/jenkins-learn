@@ -8,10 +8,10 @@ pipeline {
                         // Show the select input modal
                         def INPUT_PARAMS = input message: 'Please Provide Parameters', ok: 'Next',
                         parameters: [
-                            choice(name: 'ENVIRONMENT', choices: ['dev','prod'].join('\n'), description: 'Please select the Environment'),
-                            choice(name: 'DEPLOY', choices: ['yes', 'no'], description: 'Deploy?')]
-                        env.ENVIRONMENT = INPUT_PARAMS.ENVIRONMENT
-                        env.IMAGE_TAG = INPUT_PARAMS.DEPLOY
+                            string(name: 'NAMESPACE', defaultValue: 'zyajing', description: 'Please input namespace'),
+                            string(name: 'NUMBER', defaultValue: '01', description: 'Please input cluster number')]
+                        env.NAMESPACE = INPUT_PARAMS.NAMESPACE
+                        env.NUMBER = INPUT_PARAMS.NUMBER
                     }
                 }
             }
@@ -20,8 +20,8 @@ pipeline {
          steps {
                 script {
                     echo "All parameters have been set as Environment Variables"
-                    echo "Selected Environment: ${env.ENVIRONMENT}"
-                    echo "Selected Tag: ${env.DEPLOY}"
+                    echo "Selected Environment: ${env.NAMESPACE}"
+                    echo "Selected Tag: ${env.NUMBER}"
                 }
          }
         }
