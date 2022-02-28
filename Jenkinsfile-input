@@ -15,14 +15,18 @@ pipeline {
                 echo "Hello, ${NAMESPACE}, nice to meet you."
                 sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
             }
-        }
-        stage('DeployKubeflow') {
             steps {
-                sh 'ls -la'
-                retry(3) {
-                    sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
-                }
+                echo "second steps"
+                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
             }
         }
+        // stage('DeployKubeflow') {
+        //     steps {
+        //         sh 'ls -la'
+        //         retry(3) {
+        //             sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
+        //         }
+        //     }
+        // }
     }
 }
