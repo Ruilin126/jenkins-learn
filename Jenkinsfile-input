@@ -7,12 +7,13 @@ pipeline {
                 ok "Yes, we should."
                 submitter "alice,bob"
                 parameters {
-                    string(name: 'NAMESPACE', defaultValue: 'zyajing', description: 'In which namespace do you want to create a cluster?')
+                    string(name: 'NAMESPACE', defaultValue: 'zyajing', description: 'Please input namespace.')
+                    string(name: 'NUMBER', defaultValue: '01', description: 'Please input cluster name.')
                 }
             }
             steps {
                 echo "Hello, ${NAMESPACE}, nice to meet you."
-                sh "NAMESPACE=${NAMESPACE}; " + './readPara02.sh -a ${NAMESPACE} -b 2 -c 3'
+                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER} -c 3'
             }
         }
     }

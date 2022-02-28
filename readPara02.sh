@@ -1,17 +1,15 @@
 #!/bin/bash
 
-while getopts ":a:b:c:" opt
+while getopts ":a:b:" opt
 do
     case $opt in
         a)
-        echo "参数a的值$OPTARG"
+        echo "参数a的值$OPTARG"; a=$OPTARG
         ;;
         b)
-        echo "参数b的值$OPTARG"
+        echo "参数b的值$OPTARG"; b=$OPTARG
         ;;
         c)
-        echo "参数c的值$OPTARG"
-        ;;
         ?)
         echo "未知参数"
         exit 1;;
@@ -20,6 +18,5 @@ done
 
 echo "value a is $a"
 echo "value a is $b"
-echo "value a is $c"
 
 exit
