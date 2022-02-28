@@ -1,33 +1,45 @@
 #!/bin/groovy
 
-string ns = ""
-string number = ""
+def firstName = null
+// string ns = ""
+// string number = ""
 
 pipeline {
     agent any
     stages {
         stage('TKG') {
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'NAMESPACE', defaultValue: 'zyajing', description: 'Please input namespace.')
-                    string(name: 'NUMBER', defaultValue: '01', description: 'Please input cluster name.')
-                }
+            // input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            //     submitter "alice,bob"
+            //     parameters {
+            //         string(name: 'NAMESPACE', defaultValue: 'zyajing', description: 'Please input namespace.')
+            //         string(name: 'NUMBER', defaultValue: '01', description: 'Please input cluster name.')
+            //     }
+            // }
+            script {
+                firstName = input (
+                message: 'Should we continue?', 
+                ok "Yes, we should.",
+                submitter "alice,bob",
+                parameters: [string(defaultValue: 'Dave', name: 'FIRST_NAME', trim: true)]
+                )
             }
             steps {
-                echo "Hello, ${NAMESPACE}, nice to meet you."
-                sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
+                echo "Hello, ${firstName}, nice to meet you."
+                // echo "Hello, ${NAMESPACE}, nice to meet you."
+                // sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
             }
         }
         stage('DeployKubeflow') {
             steps {
                 sh 'ls -la'
-                retry(3) {
-                    echo "Second stage: DeployKubeflow"
-                    sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
-                }
+                echo "DeployKubeflow"
+                echo "Hello, ${firstName}, nice to meet you."
+                // retry(3) {
+                //     echo "Second stage: DeployKubeflow"
+                //     sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
+                // }
             }
         }
     }
