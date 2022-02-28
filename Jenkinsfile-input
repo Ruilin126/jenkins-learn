@@ -12,7 +12,7 @@ pipeline {
             }
             steps {
                 echo "Hello, ${NAMESPACE}, nice to meet you."
-                sh "i=${NAMESPACE}; " + './readPara.sh'
+                sh "NAMESPACE=${NAMESPACE}; " + './readPara02.sh -a ${NAMESPACE} -b 2 -c 3'
             }
         }
     }

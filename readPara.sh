@@ -1,1 +1,1 @@
-echo "from shell i=$i"
+echo "from shell namespace name NAMESPACE=$NAMESPACE"
