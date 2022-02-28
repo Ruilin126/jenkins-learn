@@ -1,3 +1,5 @@
+#!/bin/bash
+
 while getopts ":a:b:c:" opt
 do
     case $opt in
@@ -15,3 +17,9 @@ do
         exit 1;;
     esac
 done
+
+echo "value a is $a"
+echo "value a is $b"
+echo "value a is $c"
+
+exit
