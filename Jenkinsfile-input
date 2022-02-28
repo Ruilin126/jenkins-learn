@@ -1,46 +1,29 @@
-#!/bin/groovy
-
-def firstName = null
-// string ns = ""
-// string number = ""
-
 pipeline {
     agent any
     stages {
-        stage('TKG') {
-            // input {
-            //     message "Should we continue?"
-            //     ok "Yes, we should."
-            //     submitter "alice,bob"
-            //     parameters {
-            //         string(name: 'NAMESPACE', defaultValue: 'zyajing', description: 'Please input namespace.')
-            //         string(name: 'NUMBER', defaultValue: '01', description: 'Please input cluster name.')
-            //     }
-            // }
+        stage("Gather Deployment Parameters") {
             steps {
-                script {
-                    firstName = input (
-                    message: 'Should we continue?', 
-                    ok: "Yes, we should.",
-                    submitter: "alice,bob",
-                    parameters: [string(defaultValue: 'zyajing', name: 'NAMESPACE', description: 'Please input namespace.', trim: true)]
-                    )
+                timeout(time: 30, unit: 'SECONDS') {
+                    script {
+                        // Show the select input modal
+                        def INPUT_PARAMS = input message: 'Please Provide Parameters', ok: 'Next',
+                        parameters: [
+                            choice(name: 'ENVIRONMENT', choices: ['dev','prod'].join('\n'), description: 'Please select the Environment'),
+                            choice(name: 'DEPLOY', choices: ['yes', 'no'], description: 'Deploy?')]
+                        env.ENVIRONMENT = INPUT_PARAMS.ENVIRONMENT
+                        env.IMAGE_TAG = INPUT_PARAMS.DEPLOY
+                    }
                 }
-                echo "Hello, ${firstName.NAMESPACE}, nice to meet you."
-                // echo "Hello, ${NAMESPACE}, nice to meet you."
-                // sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
             }
         }
-        stage('DeployKubeflow') {
-            steps {
-                sh 'ls -la'
-                echo "DeployKubeflow"
-                echo "Hello, ${firstName.NAMESPACE}, nice to meet you."
-                // retry(3) {
-                //     echo "Second stage: DeployKubeflow"
-                //     sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
-                // }
-            }
+        stage("Use Deployment Parameters") {
+         steps {
+                script {
+                    echo "All parameters have been set as Environment Variables"
+                    echo "Selected Environment: ${env.ENVIRONMENT}"
+                    echo "Selected Tag: ${env.DEPLOY}"
+                }
+         }
         }
     }
 }
