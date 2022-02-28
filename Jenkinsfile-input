@@ -17,24 +17,16 @@ pipeline {
             //         string(name: 'NUMBER', defaultValue: '01', description: 'Please input cluster name.')
             //     }
             // }
-            // script {
-            //     firstName = input (
-            //     message: 'Should we continue?', 
-            //     ok: "Yes, we should.",
-            //     submitter: "alice,bob",
-            //     parameters: [string(defaultValue: 'Dave', name: 'FIRST_NAME', trim: true)]
-            //     )
-            // }
             steps {
                 script {
                     firstName = input (
                     message: 'Should we continue?', 
                     ok: "Yes, we should.",
                     submitter: "alice,bob",
-                    parameters: [string(defaultValue: 'Dave', name: 'FIRST_NAME', trim: true)]
+                    parameters: [string(defaultValue: 'zyajing', name: 'NAMESPACE', description: 'Please input namespace.', trim: true)]
                     )
                 }
-                echo "Hello, ${firstName}, nice to meet you."
+                echo "Hello, ${firstName.NAMESPACE}, nice to meet you."
                 // echo "Hello, ${NAMESPACE}, nice to meet you."
                 // sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
             }
@@ -43,7 +35,7 @@ pipeline {
             steps {
                 sh 'ls -la'
                 echo "DeployKubeflow"
-                echo "Hello, ${firstName}, nice to meet you."
+                echo "Hello, ${firstName.NAMESPACE}, nice to meet you."
                 // retry(3) {
                 //     echo "Second stage: DeployKubeflow"
                 //     sh "ns=${NAMESPACE}; number=${NUMBER};" + './readPara02.sh -a ${ns} -b ${number}'
