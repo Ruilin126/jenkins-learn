@@ -13,7 +13,7 @@ pipeline {
             }
             steps {
                 echo "Hello, ${NAMESPACE}, nice to meet you."
-                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER} -c 3'
+                sh "NAMESPACE=${NAMESPACE}; NUMBER=${NUMBER};" + './readPara02.sh -a ${NAMESPACE} -b ${NUMBER}'
             }
         }
     }
