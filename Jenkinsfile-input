@@ -20,8 +20,8 @@ pipeline {
             script {
                 firstName = input (
                 message: 'Should we continue?', 
-                ok "Yes, we should.",
-                submitter "alice,bob",
+                ok: "Yes, we should.",
+                submitter: "alice,bob",
                 parameters: [string(defaultValue: 'Dave', name: 'FIRST_NAME', trim: true)]
                 )
             }
