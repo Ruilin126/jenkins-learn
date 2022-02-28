@@ -9,7 +9,6 @@ do
         b)
         echo "参数b的值$OPTARG"; b=$OPTARG
         ;;
-        c)
         ?)
         echo "未知参数"
         exit 1;;
