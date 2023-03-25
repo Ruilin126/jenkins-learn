@@ -23,5 +23,12 @@ pipeline {
                 }
          }
         }
+        stage("Test if Jenkins Build trigger automicatally") {
+         steps {
+                script {
+                    date
+                }
+         }
+        }
     }
 }
