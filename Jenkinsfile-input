@@ -27,7 +27,7 @@ pipeline {
          steps {
 		sh 'ls -la'
 		sh 'date'
-		echo 'This is a sample'
+		echo 'This is a sample02'
          }
         }
     }
