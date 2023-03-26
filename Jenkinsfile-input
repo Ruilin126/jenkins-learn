@@ -27,7 +27,6 @@ pipeline {
          steps {
 		sh 'ls -la'
 		sh 'date'
-		sh 'ls'
          }
         }
     }
