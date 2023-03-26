@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'role-slave' }
+    agent { label 'slave01' }
     stages {
         stage("Gather Deployment Parameters") {
             steps {
